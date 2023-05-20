@@ -64,6 +64,7 @@ if (isset($_POST['add-to-cart'])) {
     }
 }
 
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -82,29 +83,26 @@ if (isset($_POST['add-to-cart'])) {
             <div class="col-lg-8">
                 <h1 class="mb-4"><?php echo $product['Name']; ?></h1>
                 <p class="lead"><?php echo $product['Description']; ?></p>
-                <p class="font-weight-bold mb-2">Price: <?php echo number_format($product['Price'], 0, ",", "."); ?> vnđ</p>
+                <p class="font-weight-bold mb-2">Price: <?php echo number_format($product['Price'], 0, ",", "."); ?> vnđ
+                </p>
                 <form method="post">
                     <input type="hidden" name="productId" value="<?php echo $product['Id']; ?>">
                     <button type="submit" class="btn btn-primary" name="add-to-cart">Add to Cart</button>
                 </form>
                 <a href="/shop/views/user/cart.php" class="btn btn-secondary ml-2">Cart</a>
                 <?php if (isset($message)) : ?>
-                    <div class="alert alert-primary mt-3" id="alert-message"><?php echo $message; ?></div>
-                    <script>
-                        setTimeout(function() {
-                            $('#alert-message').fadeOut('fast');
-                        }, 3000);
-                    </script>
+                <div class="alert alert-primary mt-3" id="alert-message"><?php echo $message; ?></div>
+                <script>
+                setTimeout(function() {
+                    $('#alert-message').fadeOut('fast');
+                }, 3000);
+                </script>
                 <?php endif; ?>
 
             </div>
         </div>
     </div>
-    <pre>
-    <?php
-    var_dump($_SESSION['cart']);
-    ?>
-    </pre>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

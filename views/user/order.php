@@ -20,7 +20,8 @@ if (empty($cart)) {
     }
 }
 
-
+// Kiểm tra xem đã có dữ liệu được gửi từ form hay chưa
+$paymentMethod = isset($_POST['paymentMethod']) ? $_POST['paymentMethod'] : 'cash';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +52,7 @@ if (empty($cart)) {
                     <th scope="col">Quantity</th>
                     <th scope="col">Price</th>
                     <th scope="col">Total Price</th>
-                    <th scope="col">Action</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -60,26 +61,11 @@ if (empty($cart)) {
                     <td><img src="<?php echo $product['Image']; ?>" alt="<?php echo $product['Name']; ?>"
                             class="img-thumbnail" style="max-height: 100px;"></td>
                     <td><?php echo $product['Name']; ?></td>
-                    <td>
-                        <form method="POST"
-                            action="/shop/controllers/CartController.php?action=quantity_change&productId=<?php echo $product['Id']; ?>&type=plus">
-                            <button type="submit" class="quantity-input">+</button>
-                        </form>
-
-                    </td>
                     <td><?php echo $product['Quantity']; ?></td>
-                    <td>
-                        <form method="POST"
-                            action="/shop/controllers/CartController.php?action=quantity_change&productId=<?php echo $product['Id']; ?>&type=minus">
-                            <button type="submit" class="quantity-input">-</button>
-                        </form>
-                    </td>
                     <td class="price" data-price="<?php echo $product['Price']; ?>">
                         <?php echo number_format($product['Price'], 0, ",", "."); ?> vnđ</td>
                     <td id="totalPrice" class="total-price">
                         <?php echo number_format($product['Price'] * $product['Quantity'], 0, ",", "."); ?> vnđ</td>
-                    <td><a href="/shop/helper/remove_from_cart.php?id=<?php echo $product['Id']; ?>"
-                            class="btn btn-danger">Remove</a></td>
                 </tr>
                 <?php } ?>
             </tbody>
@@ -92,7 +78,30 @@ if (empty($cart)) {
         </div>
         <div class="row mt-3">
             <div class="col-md-6">
-                <a href="/shop/views/user/order.php" class="btn btn-primary">Proceed to Checkout</a>
+                <h4>Select payment method:</h4>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="cashPayment" value="cash"
+                        <?php echo $paymentMethod === 'cash' ? 'checked' : ''; ?>>
+                    <label class="form-check-label" for="cashPayment">
+                        Cash payment
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="paymentMethod" id="onlinePayment" value="online"
+                        <?php echo $paymentMethod === 'online' ? 'checked' : ''; ?>>
+                    <label class="form-check-label" for="onlinePayment">
+                        Online payment
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                <?php if ($paymentMethod === 'cash') { ?>
+                <a href="/shop/controllers/PaymentController.php?action=Paymentincash"
+                    class="btn btn-primary">Payment</a>
+                <?php } elseif ($paymentMethod === 'online') { ?>
+                <a href="/shop/controllers/PaymentController.php?action=getInforOrder"
+                    class="btn btn-primary">Payment</a>
+                <?php } ?>
             </div>
         </div>
 
@@ -102,8 +111,22 @@ if (empty($cart)) {
         <a href="/shop/index.php" class="btn btn-primary">Tiếp tục mua sắm</a>
     </div>
 
+    <script>
+    $(document).ready(function() {
+        $('input[name="paymentMethod"]').on('change', function() {
+            var paymentMethod = $('input[name="paymentMethod"]:checked').val();
+            var paymentLink = '';
 
-    <script src="/shop/public/js/cart.js"></script>
+            if (paymentMethod === 'cash') {
+                paymentLink = '/shop/controllers/PaymentController.php?action=Paymentincash';
+            } else if (paymentMethod === 'online') {
+                paymentLink = '/shop/controllers/PaymentController.php?action=getInforOrder';
+            }
+
+            $('.col-md-6.text-end a.btn-primary').attr('href', paymentLink);
+        });
+    });
+    </script>
 </body>
 
 </html>

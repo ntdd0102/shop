@@ -14,7 +14,7 @@ foreach ($cart as $item) {
 }
 // tao order 
 $order = new OrderModel();
-$orderId = $order->addOrder("dat da mua", "", "467/56/9 le duc tho", $sum);
+$orderId = $order->addOrder("testlan2", "", "467/56/9 le duc tho", $sum);
 
 //tao order detail
 foreach ($cart as $item) {

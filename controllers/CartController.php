@@ -23,13 +23,7 @@ class CartController
                     $_SESSION["cart"][$productId] -= 1;
                 }
             }
-            // $quantity = $_POST['quantity'];
-            // Cập nhật số lượng trong biến session cart
-            // $_SESSION['cart'][$productId] = $quantity;
 
-            // Trả về kết quả thành công hoặc không thành công (nếu cần)
-            // header('Content-Type: application/json');
-            // echo json_encode(['success' => true]);
             header('Location: ' . "/shop/views/user/cart.php");
             exit();
         }
