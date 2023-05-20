@@ -1,0 +1,113 @@
+[20-05-2023 09:04:42] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:04:43] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:04:43] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:04:44] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 09:09:41] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:09:42] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:09:42] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:09:43] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 09:11:24] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:11:25] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:11:25] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:11:26] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 09:11:58] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:11:59] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:11:59] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:12:01] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 09:21:42] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:21:44] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:21:44] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:21:45] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 09:42:50] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:42:52] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:42:52] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:42:53] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:42:53] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","details":[{"field":"transactions[0].amount","issue":"Amount cannot be zero"}],"message":"Invalid request - see details","information_link":"https://developer.paypal.com/docs/api/payments/v1/#error-VALIDATION_ERROR","debug_id":"986b3080071d1"}
+[20-05-2023 09:44:17] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:44:19] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:44:19] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:44:20] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:44:20] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","details":[{"field":"transactions[0].amount","issue":"Amount cannot be zero"}],"message":"Invalid request - see details","information_link":"https://developer.paypal.com/docs/api/payments/v1/#error-VALIDATION_ERROR","debug_id":"9165fd1d05a7a"}
+[20-05-2023 09:44:58] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:44:59] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:44:59] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:45:01] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:45:01] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","details":[{"field":"transactions[0].amount","issue":"Amount cannot be zero"}],"message":"Invalid request - see details","information_link":"https://developer.paypal.com/docs/api/payments/v1/#error-VALIDATION_ERROR","debug_id":"4d2ade3392f3c"}
+[20-05-2023 09:45:09] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:45:10] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:45:10] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:45:11] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:45:11] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","details":[{"field":"transactions[0].amount","issue":"Amount cannot be zero"}],"message":"Invalid request - see details","information_link":"https://developer.paypal.com/docs/api/payments/v1/#error-VALIDATION_ERROR","debug_id":"f235101f064ae"}
+[20-05-2023 09:45:25] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:45:26] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:45:26] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:45:27] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:45:27] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","details":[{"field":"transactions[0].amount","issue":"Amount cannot be zero"}],"message":"Invalid request - see details","information_link":"https://developer.paypal.com/docs/api/payments/v1/#error-VALIDATION_ERROR","debug_id":"756f1beec39fe"}
+[20-05-2023 09:45:46] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:45:47] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:45:47] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:45:48] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:45:48] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","details":[{"field":"transactions[0].amount","issue":"Amount cannot be zero"}],"message":"Invalid request - see details","information_link":"https://developer.paypal.com/docs/api/payments/v1/#error-VALIDATION_ERROR","debug_id":"d7010afd56d51"}
+[20-05-2023 09:46:23] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:46:24] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:46:24] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:46:26] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:46:26] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","details":[{"field":"transactions[0].amount","issue":"Amount cannot be zero"}],"message":"Invalid request - see details","information_link":"https://developer.paypal.com/docs/api/payments/v1/#error-VALIDATION_ERROR","debug_id":"8113b9fb242b8"}
+[20-05-2023 09:46:58] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:46:59] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:46:59] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:47:00] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:47:00] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","details":[{"field":"transactions[0].amount","issue":"Amount cannot be zero"}],"message":"Invalid request - see details","information_link":"https://developer.paypal.com/docs/api/payments/v1/#error-VALIDATION_ERROR","debug_id":"cb72deddcbdbc"}
+[20-05-2023 09:47:24] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:47:25] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:47:25] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:47:26] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:47:26] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","details":[{"field":"transactions[0].amount","issue":"Amount cannot be zero"}],"message":"Invalid request - see details","information_link":"https://developer.paypal.com/docs/api/payments/v1/#error-VALIDATION_ERROR","debug_id":"fb6de67d3cad1"}
+[20-05-2023 09:48:19] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:48:20] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:48:20] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:48:21] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:48:21] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","details":[{"field":"transactions[0].amount","issue":"Amount cannot be zero"}],"message":"Invalid request - see details","information_link":"https://developer.paypal.com/docs/api/payments/v1/#error-VALIDATION_ERROR","debug_id":"d0b3fd7ce6e03"}
+[20-05-2023 09:48:36] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:48:36] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:48:36] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:48:38] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 09:49:22] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:49:23] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:49:23] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:49:25] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 09:50:56] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:50:57] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:50:57] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:50:59] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:50:59] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","message":"Invalid request - see details","debug_id":"f2f9a4e8c69eb","information_link":"https://developer.paypal.com/docs/api/payments/#errors","details":[{"field":"transactions[0].item_list.items[0].price","location":"body","issue":"Currency amount must be non-negative number, contain exactly 2 decimal places separated by '.' (JPY contains 0 decimal places), optional thousands separator ',', limited to 7 digits before the decimal point and currency which is a valid ISO Currency Code"}]}
+[20-05-2023 09:51:34] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:51:35] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:51:35] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:51:36] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:51:36] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","message":"Invalid request - see details","debug_id":"993c7a026a136","information_link":"https://developer.paypal.com/docs/api/payments/#errors","details":[{"field":"transactions[0].item_list.items[0].price","location":"body","issue":"Currency amount must be non-negative number, contain exactly 2 decimal places separated by '.' (JPY contains 0 decimal places), optional thousands separator ',', limited to 7 digits before the decimal point and currency which is a valid ISO Currency Code"}]}
+[20-05-2023 09:52:04] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:52:06] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:52:06] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:52:07] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 400
+[20-05-2023 09:52:07] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 400 when accessing https://api.sandbox.paypal.com/v1/payments/payment. {"name":"VALIDATION_ERROR","message":"Invalid request - see details","debug_id":"22dff36277445","information_link":"https://developer.paypal.com/docs/api/payments/#errors","details":[{"field":"transactions[0].item_list.items[0].price","location":"body","issue":"Currency amount must be non-negative number, contain exactly 2 decimal places separated by '.' (JPY contains 0 decimal places), optional thousands separator ',', limited to 7 digits before the decimal point and currency which is a valid ISO Currency Code"}]}
+[20-05-2023 09:53:10] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:53:11] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:53:11] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:53:12] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 09:54:04] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 09:54:05] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 09:54:05] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 09:54:06] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 10:29:15] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 10:29:17] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 10:29:17] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 10:29:18] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 10:38:48] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 10:38:49] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 10:38:49] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 10:38:51] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[20-05-2023 10:40:47] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[20-05-2023 10:40:49] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[20-05-2023 10:40:49] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/payment
+[20-05-2023 10:40:50] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201

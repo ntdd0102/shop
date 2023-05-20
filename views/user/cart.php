@@ -76,7 +76,7 @@ if (isset($_REQUEST['submit'])) {
                     <td>
                         <form method="POST"
                             action="/shop/controllers/CartController.php?action=quantity_change&productId=<?php echo $product['Id']; ?>&type=minus">
-                            <button\ type="submit" class="quantity-input">-</button>
+                            <button type="submit" class="quantity-input">-</button>
                         </form>
                     </td>
                     <td class="price" data-price="<?php echo $product['Price']; ?>">
@@ -100,6 +100,9 @@ if (isset($_REQUEST['submit'])) {
     </div>
     <div class="col-md-6 text-end">
         <a href="/shop/index.php" class="btn btn-primary">Tiếp tục mua sắm</a>
+    </div>
+    <div class="col-md-6 text-end">
+        <a href="/shop/controllers/PaymentController.php" class="btn btn-primary">Payment</a>
     </div>
     <pre>
     <?php

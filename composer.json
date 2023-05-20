@@ -1,0 +1,14 @@
+{
+    "name": "ntdd0/shop",
+    "type": "library",
+    "license": "1.0",
+    "authors": [
+        {
+            "name": "ntdd0102",
+            "email": "ntdd0102@gmail.com"
+        }
+    ],
+    "require": {
+        "paypal/rest-api-sdk-php": "^1.14"
+    }
+}
