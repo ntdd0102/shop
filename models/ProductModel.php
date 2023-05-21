@@ -89,7 +89,7 @@ class ProductModel
 
     public function updateProductQuantity($product_id, $quantity)
     {
-        $sql = "UPDATE products SET quantity = quantity + :quantity WHERE Id = :product_id";
+        $sql = "UPDATE products SET quantity = quantity - :quantity WHERE Id = :product_id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
         $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);

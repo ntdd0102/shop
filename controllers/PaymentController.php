@@ -19,8 +19,63 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'getInforOrder') {
 }
 
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'pay') {
-    $payMentController = new PaymentController();
-    $payMentController->payMentOrder();
+    // Kiểm tra số lượng sản phẩm trong cơ sở dữ liệu
+    $productModel = new ProductModel();
+    $isQuantityAvailable = true;
+
+    foreach ($_SESSION['cart'] as $productId => $quantity) {
+        $product = $productModel->getProductById($productId);
+        if ($product && $product['quantity'] < $quantity) {
+            $isQuantityAvailable = false;
+            break;
+        }
+    }
+
+    if ($isQuantityAvailable) {
+        // Số lượng sản phẩm đủ để đặt hàng, tiếp tục xử lý thanh toán
+        $paymentController = new PaymentController();
+        $paymentController->paymentOrder();
+    } else {
+        // Số lượng sản phẩm không đủ, chuyển hướng về trang order với thông báo lỗi
+        header("Location: /shop/views/user/order.php?error=1");
+        exit;
+    }
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'infor') {
+    // Lấy thông tin từ POST request
+    $name = $_POST['name'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+
+    // Lưu thông tin vào cookie
+    setcookie('name', $name, time() + 3600, '/'); // Lưu tên vào cookie, có thời hạn 1 giờ
+    setcookie('phone', $phone, time() + 3600, '/'); // Lưu số điện thoại vào cookie, có thời hạn 1 giờ
+    setcookie('address', $address, time() + 3600, '/'); // Lưu địa chỉ vào cookie, có thời hạn 1 giờ
+
+    // Kiểm tra số lượng sản phẩm trong cơ sở dữ liệu
+    // Kiểm tra số lượng sản phẩm trong cơ sở dữ liệu
+    $productModel = new ProductModel();
+    $isQuantityAvailable = true;
+
+    foreach ($_SESSION['cart'] as $productId => $quantity) {
+        $product = $productModel->getProductById($productId);
+        if ($product && $product['quantity'] < $quantity) {
+            $isQuantityAvailable = false;
+            break;
+        }
+    }
+
+    if ($isQuantityAvailable) {
+        // Số lượng sản phẩm đủ để đặt hàng, tiếp tục xử lý thanh toán
+        $paymentController = new PaymentController();
+        $paymentController->paymentOrder();
+    } else {
+        // Số lượng sản phẩm không đủ, chuyển hướng về trang order với thông báo lỗi
+        header("Location: /shop/views/user/order.php?error=1");
+        exit;
+    }
 }
 
 
@@ -42,6 +97,7 @@ class PaymentController
 
     public function payMentOrder()
     {
+
         $paypal = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
                 'AUxcHOijcGtj8L1I5DSM2IN0ZeiWCh3r6Jmu9f6I9VmrlC1byXQFtHm7oqRjTQQ0o5ravUx2rFAdbhA7',     // replace with your client ID
