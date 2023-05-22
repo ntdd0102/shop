@@ -21,6 +21,15 @@ class UserModel
         return $user;
     }
 
+    public function getUser($userId)
+    {
+        $sql = "SELECT * FROM user WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $userId]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user;
+    }
+
     public function addUser($username, $password, $name, $address, $email, $phone)
     {
         $stmt = $this->pdo->prepare("INSERT INTO user (Username, Pass, Name, Address, Email, Phone) VALUES (:username, :password, :name, :address, :email, :phone)");
@@ -37,15 +46,15 @@ class UserModel
     }
 
     public function updateUser($id, $name, $address, $email, $phone)
-{
-    $stmt = $this->pdo->prepare("UPDATE user SET Name=:name, Address=:address, Email=:email, Phone=:phone WHERE Id=:id");
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':address', $address);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':phone', $phone);
-    $stmt->bindParam(':id', $id);
-    return $stmt->execute();
-}
+    {
+        $stmt = $this->pdo->prepare("UPDATE user SET Name=:name, Address=:address, Email=:email, Phone=:phone WHERE Id=:id");
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':address', $address);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
 
 
     public function deleteUser($id)

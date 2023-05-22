@@ -26,7 +26,13 @@
             $message = "Thêm sản phẩm vào giỏ hàng thành công!";
         }
     }
-
+    if (isset($_GET['error']) && $_GET['error'] == 1) {
+        $messageR = "Vui lòng đăng nhập để bình luận";
+    } else if (isset($_GET['success']) && $_GET['success'] == 1) {
+        $messageR = "Bình luận thành công";
+    } else {
+        $messageR = ""; // Đặt giá trị mặc định là rỗng nếu không có lỗi
+    }
 
     ?>
  <!DOCTYPE html>
@@ -38,6 +44,11 @@
  </head>
 
  <body>
+
+     <?php if ($messageR !== "") : ?>
+         <p><?php echo $messageR; ?></p> <!-- Hiển thị thông báo lỗi khi có giá trị -->
+     <?php endif; ?>
+
      <div class="container my-5">
          <div class="row">
              <div class="col-lg-4">
@@ -67,6 +78,68 @@
          </div>
      </div>
 
+     <div class="comments-section">
+         <h2>Bình luận</h2>
+         <!-- Form bình luận -->
+         <form method="post" action="/shop/controllers/CommentController.php?action=postCmt">
+             <input type="hidden" name="productId" value="<?php echo $product['Id']; ?>">
+             <div class="form-group">
+                 <textarea class="form-control" name="content" rows="3" placeholder="Nhập bình luận của bạn"></textarea>
+             </div>
+             <button type="submit" class="btn btn-primary">Gửi</button>
+         </form>
+
+         <!-- Danh sách các bình luận -->
+         <?php
+            require_once "../../models/CommentModel.php";
+            $commentModel = new CommentModel();
+            // Lấy số trang hiện tại
+            $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+            // Số lượng bình luận muốn hiển thị trên mỗi trang
+            $comments_per_page = 5;
+
+            // Tính toán vị trí bắt đầu và số lượng bình luận cho trang hiện tại
+            $start_index = ($current_page - 1) * $comments_per_page;
+            $end_index = $start_index + $comments_per_page;
+
+            // Lấy danh sách bình luận từ cơ sở dữ liệu dựa trên product_id và phân trang
+            $comments = $commentModel->getCommentsByProductIdWithPagination($_GET['id'], $start_index, $end_index);
+
+            // Lấy tổng số lượng bình luận
+            $total_comments = $commentModel->getTotalCommentsByProductId($_GET['id']);
+
+            // Tính toán số trang
+            $total_pages = ceil($total_comments / $comments_per_page);
+            ?>
+
+         <?php if (!empty($comments)) : ?>
+             <div class="comment-list">
+                 <?php foreach ($comments as $comment) : ?>
+                     <?php
+                        require_once "../../models/UserModel.php";
+                        $userModel = new UserModel();
+                        $user = $userModel->getUser($comment['User_id']);
+                        ?>
+                     <div class="comment">
+                         <p class="user"><?php echo $user['Name']; ?></p>
+                         <p class="content"><?php echo $comment['Content']; ?></p>
+                         <p class="timestamp"><?php echo $comment['Date_created']; ?></p>
+                     </div>
+                 <?php endforeach; ?>
+             </div>
+
+             <!-- Phân trang -->
+             <?php if ($total_pages > 1) : ?>
+                 <div class="pagination">
+                     <?php for ($page = 1; $page <= $total_pages; $page++) : ?>
+                         <a href="?id=<?php echo $_GET['id']; ?>&page=<?php echo $page; ?>"><?php echo $page; ?></a>
+                     <?php endfor; ?>
+                 </div>
+             <?php endif; ?>
+         <?php endif; ?>
+
+     </div>
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
