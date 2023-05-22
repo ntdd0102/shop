@@ -14,6 +14,12 @@ use PayPal\Api\Transaction;
 use PayPal\Rest\ApiContext;
 
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'getInforOrder') {
+    if (isset($_GET['order']) && $_GET['order'] == 'cash') {
+        $_SESSION['onl'] = 0;
+    }
+    if (isset($_GET['order']) && $_GET['order'] == 'onl') {
+        $_SESSION['onl'] = 1;
+    }
     $payMentController = new PaymentController();
     $payMentController->getInforOrder();
 }
@@ -34,7 +40,11 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'pay') {
     if ($isQuantityAvailable) {
         // Số lượng sản phẩm đủ để đặt hàng, tiếp tục xử lý thanh toán
         $paymentController = new PaymentController();
-        $paymentController->paymentOrder();
+        if (isset($_SESSION['onl']) && $_SESSION['onl'] == 0) {
+            $paymentController->payByCash();
+        } else if (isset($_SESSION['onl']) && $_SESSION['onl'] == 1) {
+            $paymentController->payMentOrder();
+        }
     } else {
         // Số lượng sản phẩm không đủ, chuyển hướng về trang order với thông báo lỗi
         header("Location: /shop/views/user/order.php?error=1");
@@ -70,7 +80,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
     if ($isQuantityAvailable) {
         // Số lượng sản phẩm đủ để đặt hàng, tiếp tục xử lý thanh toán
         $paymentController = new PaymentController();
-        $paymentController->paymentOrder();
+        if (isset($_SESSION['onl']) && $_SESSION['onl'] == 0) {
+            $paymentController->payByCash();
+        } else if (isset($_SESSION['onl']) && $_SESSION['onl'] == 1) {
+            $paymentController->payMentOrder();
+        }
     } else {
         // Số lượng sản phẩm không đủ, chuyển hướng về trang order với thông báo lỗi
         header("Location: /shop/views/user/order.php?error=1");
@@ -78,10 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
     }
 }
 
-
-
 class PaymentController
 {
+    public function payByCash()
+    {
+        header('Location: ' . "/shop/controllers/OrderSuccessController.php");
+        exit();
+    }
 
     public function getInforOrder()
     {
@@ -100,8 +117,8 @@ class PaymentController
 
         $paypal = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
-                'AUxcHOijcGtj8L1I5DSM2IN0ZeiWCh3r6Jmu9f6I9VmrlC1byXQFtHm7oqRjTQQ0o5ravUx2rFAdbhA7',     // replace with your client ID
-                'ELji9G8W0NvA66zdzfWnrPh9eQTcGYwvYpDKV3qsEy0V_t8U8NWbHc4FuTXdUDoJTdMH-WHRKXeZmmDN'  // replace with your client secret
+                'ASmq69O3yCJwIIzsEIP9v1q6HooV_lJtNLOQbIKaIdiIS-U8m0D1A7WDTOFTmIvP0GmfkNa-i233ts_X',     // replace with your client ID
+                'EHgzi7A8kgq03_33c3pUawcq6ygk-RS6HP_BaCYJ4lF_IIgOPmfBnOSEWshk410upJuqShm59hP0Rdi7'  // replace with your client secret
             )
         );
         $paypal->setConfig([
