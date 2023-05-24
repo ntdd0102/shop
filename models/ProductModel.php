@@ -10,9 +10,19 @@ class ProductModel
         $this->pdo = getConnection();
     }
 
+    public function getAllProducts()
+    {
+        $sql = "SELECT * FROM products";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
+    }
+
+
     public function getProductByCategoryId($category_id)
     {
-        $sql = "SELECT * FROM products WHERE category_id = :category_id";
+        $sql = "SELECT * FROM products WHERE category_id = :category_id AND is_visible = 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['category_id' => $category_id]);
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -30,7 +40,7 @@ class ProductModel
 
     public function search($keyword)
     {
-        $sql = "SELECT * FROM products WHERE Name LIKE :keyword";
+        $sql = "SELECT * FROM products WHERE Name LIKE :keyword AND is_visible = 1";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':keyword', '%' . $keyword . '%');
         $stmt->execute();
@@ -58,33 +68,44 @@ class ProductModel
         return $stmt->execute();
     }
 
-    public function updateProduct(Product $product)
+    public function updateProduct($product_id, $product_data)
     {
-        $sql = "UPDATE products SET Name=:name, Image=:image, Description=:description, category_id=:category_id,
-            supplier_id=:supplier_id, Price=:price, Quantity=:quantity, Is_visible=:is_visible WHERE id=:id";
+        $sql = "UPDATE products SET Name = :name, Description = :description, category_id = :category_id,
+            supplier_id = :supplier_id, Price = :price, quantity = :quantity, is_visible = :is_visible";
+
+        // Kiểm tra nếu có hình ảnh mới, thì cập nhật trường Image
+        if (isset($product_data['image'])) {
+            $sql .= ", Image = :image";
+        }
+
+        $sql .= " WHERE id = :id";
 
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':name', $product_data['name']);
+        $stmt->bindValue(':description', $product_data['description']);
+        $stmt->bindValue(':category_id', $product_data['category_id']);
+        $stmt->bindValue(':supplier_id', $product_data['supplier_id']);
+        $stmt->bindValue(':price', $product_data['price']);
+        $stmt->bindValue(':quantity', $product_data['quantity']);
+        $stmt->bindValue(':is_visible', $product_data['is_visible']);
 
-        $stmt->bindParam(':name', $product->getName());
-        $stmt->bindParam(':image', $product->getImage());
-        $stmt->bindParam(':description', $product->getDescription());
-        $stmt->bindParam(':category_id', $product->getCategoryId());
-        $stmt->bindParam(':supplier_id', $product->getSupplierId());
-        $stmt->bindParam(':price', $product->getPrice());
-        $stmt->bindParam(':quantity', $product->getQuantity());
-        $stmt->bindParam(':is_visible', $product->getIsVisible());
-        $stmt->bindParam(':id', $product->getId());
+        // Kiểm tra nếu có hình ảnh mới, thì gán giá trị cho trường Image
+        if (isset($product_data['image'])) {
+            $stmt->bindValue(':image', $product_data['image']);
+        }
 
-        return $stmt->execute();
+        $stmt->bindValue(':id', $product_id);
+        $stmt->execute();
+        return $stmt->rowCount();
     }
+
+
 
     public function deleteProduct($product_id)
     {
-        $sql = "DELETE FROM products WHERE id = :product_id";
+        $sql = "UPDATE products SET is_visible = 0 WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['product_id' => $product_id]);
-
-        return $stmt->rowCount();
+        $stmt->execute(['id' => $product_id]);
     }
 
     public function updateProductQuantity($product_id, $quantity)

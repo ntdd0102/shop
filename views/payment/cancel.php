@@ -9,7 +9,8 @@
 </head>
 
 <body>
-    <h1>cancel</h1>
+    <h1>Bạn đã hủy thanh toán</h1>
+    <p>Quay lại trang Đặt hàng <a href="/shop/views/user/order.php">Đặt hàng</a></p>
 </body>
 
 </html>

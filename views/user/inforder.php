@@ -29,8 +29,9 @@ session_start();
     </form>
 
     <?php
-            var_dump($_SESSION['onl']);
-            ?>
+    var_dump($_SESSION['onl']);
+    ?>
+    <p>Bạn đã có tài khoản để nhận hàng? Nếu có hãy <a href="/shop/views/login.php">Login</a></p>
 </body>
 
 </html>
