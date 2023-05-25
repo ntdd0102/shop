@@ -14,13 +14,13 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['Role'] != 2) {
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
-    .admin-sidebar {
-        background-color: #f8f9fa;
-    }
+        .admin-sidebar {
+            background-color: #f8f9fa;
+        }
 
-    .admin-content {
-        margin-top: 20px;
-    }
+        .admin-content {
+            margin-top: 20px;
+        }
     </style>
 </head>
 
@@ -34,11 +34,10 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['Role'] != 2) {
                         <a class="nav-link active" href="/shop/views/admin/hello.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                            href="/shop/controllers/ProductController.php?action=adminGetProduct">Products</a>
+                        <a class="nav-link" href="/shop/controllers/ProductController.php?action=adminGetProduct">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Orders</a>
+                        <a class="nav-link" href="/shop/controllers/OrderController.php?action=adminGetOrder">Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Users</a>

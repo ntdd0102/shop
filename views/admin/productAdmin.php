@@ -41,20 +41,20 @@ $displayProducts = array_slice($products, $startIndex, $endIndex - $startIndex +
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
-    .admin-sidebar {
-        background-color: #f8f9fa;
-        height: 100vh;
-        /* Đặt chiều cao cho thanh nav bằng chiều cao của viewport */
-    }
+        .admin-sidebar {
+            background-color: #f8f9fa;
+            height: 100vh;
+            /* Đặt chiều cao cho thanh nav bằng chiều cao của viewport */
+        }
 
-    .admin-sidebar h3 {
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
+        .admin-sidebar h3 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
 
-    .admin-content {
-        margin-top: 20px;
-    }
+        .admin-content {
+            margin-top: 20px;
+        }
     </style>
 </head>
 
@@ -68,11 +68,10 @@ $displayProducts = array_slice($products, $startIndex, $endIndex - $startIndex +
                         <a class="nav-link active" href="/shop/views/admin/hello.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                            href="/shop/controllers/ProductController.php?action=adminGetProduct">Products</a>
+                        <a class="nav-link" href="/shop/controllers/ProductController.php?action=adminGetProduct">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Orders</a>
+                        <a class="nav-link" href="/shop/controllers/OrderController.php?action=adminGetOrder">Orders</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Users</a>
@@ -91,87 +90,80 @@ $displayProducts = array_slice($products, $startIndex, $endIndex - $startIndex +
                 </div>
                 <!-- Hiển thị danh sách sản phẩm -->
                 <?php if (empty($displayProducts)) : ?>
-                <p>No products found.</p>
+                    <p>No products found.</p>
                 <?php else : ?>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Image</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($displayProducts as $product) : ?>
-                        <tr>
-                            <td><?php echo $product['Id']; ?></td>
-                            <td><?php echo $product['Name']; ?></td>
-                            <td>
-                                <img src="<?php echo $product['Image']; ?>" alt="<?php echo $product['Name']; ?>"
-                                    class="img-thumbnail" style="max-height: 100px;">
-                            </td>
-                            <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-                                title="<?php echo $product['Description']; ?>">
-                                <?php echo $product['Description']; ?>
-                            </td>
-                            <td><?php echo $product['Price']; ?></td>
-                            <td>
-                                <?php if ($product['quantity'] > 0) {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($displayProducts as $product) : ?>
+                                <tr>
+                                    <td><?php echo $product['Id']; ?></td>
+                                    <td><?php echo $product['Name']; ?></td>
+                                    <td>
+                                        <img src="<?php echo $product['Image']; ?>" alt="<?php echo $product['Name']; ?>" class="img-thumbnail" style="max-height: 100px;">
+                                    </td>
+                                    <td style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="<?php echo $product['Description']; ?>">
+                                        <?php echo $product['Description']; ?>
+                                    </td>
+                                    <td><?php echo $product['Price']; ?></td>
+                                    <td>
+                                        <?php if ($product['quantity'] > 0) {
                                             echo $product['quantity'];
                                         } else {
                                             echo "Hết hàng";
                                         } ?>
-                            </td>
-                            <td>
-                                <?php if ($product['is_visible'] == 1) {
+                                    </td>
+                                    <td>
+                                        <?php if ($product['is_visible'] == 1) {
                                             echo "Hiện";
                                         } else {
                                             echo "Ẩn";
                                         } ?>
-                            </td>
-                            <td>
-                                <div class="d-flex">
-                                    <a href="/shop/controllers/ProductController.php?action=adminEditProduct&id=<?php echo $product['Id']; ?>"
-                                        class="btn btn-primary mr-2">Edit</a>
-                                    <a href="/shop/controllers/ProductController.php?action=adminDelProduct&id=<?php echo $product['Id']; ?>"
-                                        class="btn btn-danger">Delete</a>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <a href="/shop/controllers/ProductController.php?action=adminEditProduct&id=<?php echo $product['Id']; ?>" class="btn btn-primary mr-2">Edit</a>
+                                            <a href="/shop/controllers/ProductController.php?action=adminDelProduct&id=<?php echo $product['Id']; ?>" class="btn btn-danger">Delete</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
 
-                <!-- Hiển thị phân trang -->
-                <nav aria-label="Product Pagination">
-                    <ul class="pagination">
-                        <?php if ($currentPage > 1) : ?>
-                        <li class="page-item">
-                            <a class="page-link"
-                                href="/shop/views/admin/productAdmin.php?page=<?php echo $currentPage - 1; ?>">Previous</a>
-                        </li>
-                        <?php endif; ?>
+                    <!-- Hiển thị phân trang -->
+                    <nav aria-label="Product Pagination">
+                        <ul class="pagination">
+                            <?php if ($currentPage > 1) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="/shop/views/admin/productAdmin.php?page=<?php echo $currentPage - 1; ?>">Previous</a>
+                                </li>
+                            <?php endif; ?>
 
-                        <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                        <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-                            <a class="page-link"
-                                href="/shop/views/admin/productAdmin.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                        </li>
-                        <?php endfor; ?>
+                            <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
+                                <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                                    <a class="page-link" href="/shop/views/admin/productAdmin.php?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                </li>
+                            <?php endfor; ?>
 
-                        <?php if ($currentPage < $totalPages) : ?>
-                        <li class="page-item">
-                            <a class="page-link"
-                                href="/shop/views/admin/productAdmin.php?page=<?php echo $currentPage + 1; ?>">Next</a>
-                        </li>
-                        <?php endif; ?>
-                    </ul>
-                </nav>
+                            <?php if ($currentPage < $totalPages) : ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="/shop/views/admin/productAdmin.php?page=<?php echo $currentPage + 1; ?>">Next</a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </nav>
 
                 <?php endif; ?>
             </div>
