@@ -49,24 +49,36 @@ class ProductModel
         return $result;
     }
 
-    public function addProduct(Product $product)
+    public function addProduct($name, $image, $description, $categoryId, $supplierId, $price, $quantity, $isVisible)
     {
-        $sql = "INSERT INTO products (Name, Image, Description, category_id, supplier_id, Price, Quantity, Is_visible)
-            VALUES (:name, :image, :description, :category_id, :supplier_id, :price, :quantity, :is_visible)";
+        try {
+            // Chuẩn bị câu lệnh SQL để thêm sản phẩm
+            $sql = "INSERT INTO products (Name, Image, Description, Category_id, Supplier_id, Price, Quantity, Is_visible) 
+                VALUES (:name, :image, :description, :categoryId, :supplierId, :price, :quantity, :isVisible)";
 
-        $stmt = $this->pdo->prepare($sql);
+            // Chuẩn bị và bind các giá trị cho câu lệnh SQL
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':image', $image);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':categoryId', $categoryId);
+            $stmt->bindParam(':supplierId', $supplierId);
+            $stmt->bindParam(':price', $price);
+            $stmt->bindParam(':quantity', $quantity);
+            $stmt->bindParam(':isVisible', $isVisible);
 
-        $stmt->bindParam(':name', $product->getName());
-        $stmt->bindParam(':image', $product->getImage());
-        $stmt->bindParam(':description', $product->getDescription());
-        $stmt->bindParam(':category_id', $product->getCategoryId());
-        $stmt->bindParam(':supplier_id', $product->getSupplierId());
-        $stmt->bindParam(':price', $product->getPrice());
-        $stmt->bindParam(':quantity', $product->getQuantity());
-        $stmt->bindParam(':is_visible', $product->getIsVisible());
+            // Thực thi câu lệnh SQL
+            $stmt->execute();
 
-        return $stmt->execute();
+            // Trả về ID của sản phẩm vừa được thêm vào
+            return $this->pdo->lastInsertId();
+        } catch (PDOException $e) {
+            // Xử lý lỗi nếu có
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
     }
+
 
     public function updateProduct($product_id, $product_data)
     {
@@ -122,6 +134,22 @@ class ProductModel
             // Handle the exception, e.g., log the error or show an error message
             return false;
         }
+    }
+
+    public function checkProductNameExists($name)
+    {
+        $sql = "SELECT COUNT(*) as count FROM products WHERE Name = :name";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':name', $name);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Kiểm tra số lượng sản phẩm có tên trùng
+        if ($result['count'] > 0) {
+            return true; // Tên sản phẩm đã tồn tại
+        }
+
+        return false; // Tên sản phẩm không tồn tại
     }
 }
 

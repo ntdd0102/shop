@@ -27,9 +27,24 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'adminDelProduct') {
     $productController->delProduct();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveProduct') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveEditProduct') {
     $productController = new ProductController();
     $productController->editProduct();
+}
+
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'adminAddProduct') {
+    $productController = new ProductController();
+    $productController->beforAddProduct();
+}
+
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'checkProductName') {
+    $productController = new ProductController();
+    $productController->checkProductName();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveAddProduct') {
+    $productController = new ProductController();
+    $productController->addProduct();
 }
 
 
@@ -89,6 +104,75 @@ class ProductController
         header('Location: http://localhost/shop/views/admin/productAdmin.php');
         exit();
     }
+
+    function processImageUpload($categoryId)
+    {
+        $imagePath = null;
+
+        // Xử lý và lưu hình ảnh vào thư mục
+        $categoryModel = new CategoryModel();
+
+        if (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+            $image = $_FILES['image'];
+
+            $basePath = '/shop/public/image/';
+            $categoryFolder = $categoryModel->getCategoryNameById($categoryId);
+            $targetFolder = $basePath . $categoryFolder . '/';
+
+            if (!file_exists($targetFolder)) {
+                mkdir($targetFolder, 0777, true);
+            }
+
+            $imageName = $image['name'];
+            $targetPath = $targetFolder . $imageName;
+
+            if (move_uploaded_file($image['tmp_name'], $targetPath)) {
+                $imagePath = $targetPath;
+            } else {
+                // Xử lý lỗi khi lưu hình ảnh thất bại
+                echo 'Failed to upload image.';
+                return null;
+            }
+        }
+
+        return $imagePath;
+    }
+    public function addProduct()
+    {
+        $productModel = new ProductModel();
+
+        // Lấy dữ liệu từ form
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $categoryId = $_POST['category'];
+        $supplierId = $_POST['supplier'];
+        $price = $_POST['price'];
+        $quantity = $_POST['quantity'];
+        $isVisible = $_POST['is_visible'];
+
+        // Xử lý hình ảnh (nếu có)
+        $imagePath = $this->processImageUpload($categoryId);
+
+        // Thêm sản phẩm vào cơ sở dữ liệu
+        $productId = $productModel->addProduct($name, $imagePath, $description, $categoryId, $supplierId, $price, $quantity, $isVisible);
+
+        // Kiểm tra kết quả thêm
+        if ($productId !== false) {
+            // Thêm thành công
+            // Redirect hoặc thông báo thành công cho người dùng
+            //var_dump($productId);
+            $productController = new ProductController();
+            $productController->getProduct();
+        } else {
+            // Thêm thất bại
+            // Xử lý lỗi, redirect hoặc thông báo cho người dùng
+            echo 'Add product failed';
+        }
+    }
+
+
+
+
 
     public function editProduct()
     {
@@ -195,6 +279,17 @@ class ProductController
         }
     }
 
+    public function beforAddProduct()
+    {
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getAll();
+
+        $supplierModel = new SupplierModel();
+        $suppliers = $supplierModel->getAll();
+
+        require_once dirname(__FILE__) . '../../views/admin/addproduct.php';
+    }
+
     public function delProduct()
     {
         $product_id = $_GET['id'];
@@ -206,5 +301,28 @@ class ProductController
         $productModel->deleteProduct($product_id);
         $productController = new ProductController();
         $productController->getProduct();
+    }
+
+    public function checkProductName()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
+            $name = $_POST['name'];
+
+            // Kiểm tra tên sản phẩm có tồn tại hay không
+            $productModel = new ProductModel();
+            $isExists = $productModel->checkProductNameExists($name);
+
+            if ($isExists) {
+                // Tên sản phẩm đã tồn tại, trả về thông báo lỗi cho trình duyệt
+                header('Content-Type: application/json');
+                echo json_encode(['error' => 'Tên sản phẩm đã tồn tại']);
+                exit();
+            }
+
+            // Tên sản phẩm không bị trùng, trả về thông báo thành công cho trình duyệt
+            header('Content-Type: application/json');
+            echo json_encode(['success' => 'Tên sản phẩm hợp lệ']);
+            exit();
+        }
     }
 }
