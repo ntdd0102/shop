@@ -69,6 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
     $productModel = new ProductModel();
     $isQuantityAvailable = true;
 
+    // echo $_COOKIE['name'];
+    // echo $_COOKIE['phone'];
+    // echo $_COOKIE['address'];
     foreach ($_SESSION['cart'] as $productId => $quantity) {
         $product = $productModel->getProductById($productId);
         if ($product && $product['quantity'] < $quantity) {

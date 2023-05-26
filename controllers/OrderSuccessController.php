@@ -15,16 +15,9 @@ foreach ($cart as $productId => $quantity) {
         $sum += ($itemProduct["Price"] * $quantity);
     }
 }
-
-$nameC = $_POST['name'];
-$phoneC = $_POST['phone'];
-$addressC = $_POST['address'];
-
-// Lưu thông tin vào cookie
-setcookie('name', $nameC, time() + 3600, '/'); // Lưu tên vào cookie, có thời hạn 1 giờ
-setcookie('phone', $phoneC, time() + 3600, '/'); // Lưu số điện thoại vào cookie, có thời hạn 1 giờ
-setcookie('address', $addressC, time() + 3600, '/'); // Lưu địa chỉ vào cookie, có thời hạn 1 giờ
-
+echo $_COOKIE['name'];
+echo $_COOKIE['phone'];
+echo $_COOKIE['address'];
 
 
 if (isset($_SESSION['user'])) {
@@ -34,16 +27,15 @@ if (isset($_SESSION['user'])) {
     $email = $user['Email'];
     $delivery_address = $user['Address'];
 } else {
-    $customer_name = isset($_COOKIE['name']) ? $_COOKIE['name'] : $_COOKIE['nameC'];
-    $phone = isset($_COOKIE['phone']) ? $_COOKIE['phone'] : $_COOKIE['phoneC'];
+    $customer_name = isset($_COOKIE['name']) ? $_COOKIE['name'] : '';
+    $phone = isset($_COOKIE['phone']) ? $_COOKIE['phone'] : '';
     $email = '';
-    $delivery_address = isset($_COOKIE['address']) ? $_COOKIE['address'] : $_COOKIE['addressC'];
+    $delivery_address = isset($_COOKIE['address']) ? $_COOKIE['address'] : '';
 }
 $is_pay_onl = 0; // Khởi tạo giá trị mặc định là 0
 if (isset($_SESSION['onl']) && $_SESSION['onl'] == 1) {
     $is_pay_onl = 1;
 }
-
 // Tạo order
 $order = new OrderModel();
 $orderName = generateOrderName();
@@ -52,6 +44,8 @@ $orderName = generateOrderName();
 while ($order->isOrderNameExists($orderName)) {
     $orderName = generateOrderName();
 }
+
+echo $orderName . ' ' . $customer_name . ' ' . $phone . ' ' . $email . ' ' . $delivery_address . ' ' . $sum . ' ' . $is_pay_onl;
 
 $orderId = $order->addOrder($orderName, $customer_name, $phone, $email, $delivery_address, $sum, $is_pay_onl);
 

@@ -28,6 +28,16 @@ class OrderModel
         return $orders;
     }
 
+    public function getOrderById($orderId)
+    {
+        $sql = "SELECT * FROM orders WHERE Id = :orderId";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['orderId' => $orderId]);
+        $order = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $order;
+    }
+
+
     public function addOrder($name, $customer_name, $phone, $email, $delivery_address, $total_price, $onl)
     {
         $sql = "INSERT INTO orders (Name, Customer_name, Phone, Email, Delivery_address, Date_created, Date_updated, Total_price, Is_pay_onl) 
@@ -45,6 +55,7 @@ class OrderModel
         $order_id = $this->pdo->lastInsertId();
         return $order_id;
     }
+
 
 
     public function updateOrderStatus($order_id, $status)
@@ -113,5 +124,34 @@ class OrderModel
             echo 'Lỗi truy vấn: ' . $e->getMessage();
             return false;
         }
+    }
+
+    public function updateOrder($orderId, $name, $phone, $email, $customerName, $deliveryAddress, $dateCreated, $totalPrice, $isPayOnline, $status)
+    {
+        $stmt = $this->pdo->prepare("UPDATE `orders` SET 
+                                        Name = :name, 
+                                        Phone = :phone, 
+                                        Email = :email, 
+                                        Customer_name = :customerName, 
+                                        Delivery_address = :deliveryAddress, 
+                                        Date_created = :dateCreated, 
+                                        Date_updated = NOW(), 
+                                        Total_price = :totalPrice, 
+                                        Is_pay_onl = :isPayOnline, 
+                                        `Status` = :status 
+                                    WHERE Id = :orderId");
+
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':customerName', $customerName);
+        $stmt->bindParam(':deliveryAddress', $deliveryAddress);
+        $stmt->bindParam(':dateCreated', $dateCreated);
+        $stmt->bindParam(':totalPrice', $totalPrice);
+        $stmt->bindParam(':isPayOnline', $isPayOnline);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':orderId', $orderId);
+
+        return $stmt->execute();
     }
 }

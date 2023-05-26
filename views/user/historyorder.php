@@ -15,7 +15,7 @@ $orders = unserialize(urldecode($_GET['orders']));
         <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm" aria-label="Search" name="orderName">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
     </form>
-    <pre><?php var_dump($orders); ?></pre>
+
 
     <?php if (count($orders) > 0) : ?>
         <?php foreach ($orders as $order) : ?>
@@ -28,18 +28,23 @@ $orders = unserialize(urldecode($_GET['orders']));
                     <?php
                     $status = $order['Status'];
                     if ($status == 1) {
-                        echo "Chưa xác nhận";
+                        echo 'Chưa xác nhận';
                     } elseif ($status == 2) {
-                        echo "Đã xác nhận";
+                        echo 'Đã xác nhận';
                     } elseif ($status == 3) {
-                        echo "Đang giao hàng";
+                        echo 'Đang chuẩn bị hàng';
                     } elseif ($status == 4) {
-                        echo "Đã hoàn thành";
+                        echo 'Đang giao hàng';
+                    } elseif ($status == 5) {
+                        echo 'Hoàn thành';
+                    } elseif ($status == 6) {
+                        echo 'Hủy';
                     } else {
-                        echo "Trạng thái không xác định";
+                        echo 'Trạng thái không xác định';
                     }
                     ?>
                 </p>
+
                 <?php
                 // Lấy các Order Detail dựa trên Order ID
                 require_once "../../models/Order_DetailModel.php";

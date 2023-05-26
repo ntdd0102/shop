@@ -13,9 +13,6 @@ session_start();
 
 
     <form method="POST" action="/shop/controllers/PaymentController.php?action=infor">
-
-
-
         <label for="name">Họ và tên:</label>
         <input type="text" id="name" name="name" required><br><br>
 
