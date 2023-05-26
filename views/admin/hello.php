@@ -14,20 +14,51 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['Role'] != 2) {
     <title>Admin Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
-        .admin-sidebar {
+        body {
+            font-family: Arial, sans-serif;
             background-color: #f8f9fa;
+        }
+
+        .admin-sidebar {
+            background-color: #343a40;
+            color: #fff;
+            min-height: 100vh;
+            padding-top: 20px;
+        }
+
+        .admin-sidebar h3 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .admin-sidebar .nav-link {
+            color: #fff;
+            padding: 10px;
+        }
+
+        .admin-sidebar .nav-link:hover {
+            background-color: #555;
         }
 
         .admin-content {
             margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .admin-content h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 
 <body>
-    <<div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 admin-sidebar">
+            <div class="col-md-2 admin-sidebar">
                 <h3>Admin Panel</h3>
                 <ul class="nav flex-column">
                     <li class="nav-item">
@@ -51,15 +82,11 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['Role'] != 2) {
                 <h2>Welcome to Admin Panel</h2>
             </div>
         </div>
-        </div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>
