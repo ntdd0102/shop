@@ -154,4 +154,46 @@ class OrderModel
 
         return $stmt->execute();
     }
+
+
+    public function getMonthlyRevenue()
+    {
+        // Truy vấn dữ liệu doanh thu theo tháng từ bảng "orders"
+        $sql = "SELECT MONTH(Date_created) AS Month, SUM(Total_price) AS Revenue
+            FROM orders
+            WHERE Status = 5
+            GROUP BY MONTH(Date_created)";
+        $stmt = $this->pdo->query($sql);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Xử lý kết quả truy vấn
+        $revenueData = array(
+            'labels' => array(),
+            'data' => array()
+        );
+
+        foreach ($result as $row) {
+            // Thêm tháng vào mảng nhãn (labels)
+            $revenueData['labels'][] = date("F", mktime(0, 0, 0, $row['Month'], 1));
+
+            // Thêm doanh thu vào mảng dữ liệu (data)
+            $revenueData['data'][] = (int) $row['Revenue'];
+        }
+
+        return $revenueData;
+    }
+
+    public function getMonthlyProductSales()
+    {
+        $sql = "SELECT p.Id AS Product_id, p.Name, SUM(od.Quantity) AS TotalSales
+        FROM orders AS o
+        INNER JOIN order_detail AS od ON o.Id = od.Order_id
+        INNER JOIN products AS p ON od.Product_id = p.Id
+        WHERE o.Status = 5 AND MONTH(o.Date_created) = MONTH(CURRENT_DATE())
+        GROUP BY p.Id, p.Name";
+        $stmt = $this->pdo->query($sql);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
 }

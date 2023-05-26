@@ -39,6 +39,11 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'saveEditOrder') {
     $orderController->editOrder();
 }
 
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'revenue') {
+    $orderController = new OrderController();
+    $orderController->showMonthlyRevenue();
+}
+
 class OrderController
 {
     public function historyOrder()
@@ -152,5 +157,24 @@ class OrderController
             $orderController = new OrderController();
             $orderController->getOrder();
         }
+    }
+
+    public function showMonthlyRevenue()
+    {
+        // Get monthly revenue data from the model
+        $orderModel = new OrderModel();
+        $revenueData = $orderModel->getMonthlyRevenue();
+
+        // Get monthly product sales data from the model
+        $productSalesData = $orderModel->getMonthlyProductSales();
+
+        // Pass the data to the view
+        // You can choose your preferred way to pass data to the view (e.g., using a template engine)
+        // In this example, I'll simply include the view file and pass the data as variables
+        $revenueLabels = $revenueData['labels'];
+        $revenueData = $revenueData['data'];
+        $productSalesLabels = array_column($productSalesData, 'Name');
+        $productSalesData = array_column($productSalesData, 'TotalSales');
+        require_once dirname(__FILE__) . '../../views/admin/revenue.php';
     }
 }
