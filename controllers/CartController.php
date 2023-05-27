@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'quantity_change') {
-    var_dump($_REQUEST);
+
     $cartController = new CartController();
     $cartController->updateQuantityCart();
 }

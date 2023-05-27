@@ -75,13 +75,16 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['Role'] != 2) {
                         <a class="nav-link" href="/shop/controllers/OrderController.php?action=revenue">Revenue</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
+                        <a class="nav-link"
+                            href="/shop/controllers/CategoryController.php?action=adminGetCategory">Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="/shop/controllers/SupplierController.php?action=adminGetSupplier">Supplier</a>
                     </li>
                 </ul>
             </div>
-            <div class="col-md-9 admin-content">
-                <h2>Welcome to Admin Panel</h2>
-            </div>
+
         </div>
     </div>
 

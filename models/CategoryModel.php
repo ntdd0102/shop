@@ -27,6 +27,40 @@ class CategoryModel
         $category = $stmt->fetch(PDO::FETCH_ASSOC);
         return $category['Name'];
     }
+    public function updateCategoryName($id, $newName)
+    {
+        $query = "UPDATE category SET Name = :newName WHERE Id = :id";
+
+        // Chuẩn bị và thực thi câu truy vấn
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':newName', $newName);
+        $statement->bindParam(':id', $id);
+        return $statement->execute();
+    }
+    public function isCategoryExists($name)
+    {
+        $query = "SELECT COUNT(*) FROM category WHERE Name = :name";
+
+        // Chuẩn bị và thực thi câu truy vấn
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':name', $name);
+        $statement->execute();
+
+        $count = $statement->fetchColumn();
+
+        // Trả về true nếu tên danh mục đã tồn tại, ngược lại trả về false
+        return ($count > 0);
+    }
+
+    public function addCategory($name)
+    {
+        $query = "INSERT INTO category (Name) VALUES (:name)";
+
+        // Chuẩn bị và thực thi câu truy vấn
+        $statement = $this->pdo->prepare($query);
+        $statement->bindParam(':name', $name);
+        return $statement->execute();
+    }
 }
 
 class Category

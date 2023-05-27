@@ -20,9 +20,11 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'adminGetOrder') {
 }
 
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'cancelOrder') {
+
     $orderController = new OrderController();
     $orderController->cancelOrder();
 }
+
 
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'viewOrderDetail') {
     $orderController = new OrderController();
@@ -98,15 +100,44 @@ class OrderController
 
     public function cancelOrder()
     {
-        $orderId = $_GET['id'];
-
         $orderModel = new OrderModel();
+        $orderId = $_GET['id'];
+        $orderName = $_POST['orderName'];
 
-        $orderModel->updateOrderStatus($orderId, 6);
+        if (isset($_SESSION['user'])) {
+            $userRole = $_SESSION['user']['Role'];
 
-        $orderController = new OrderController();
-        $orderController->getOrder();
+            if ($userRole == 2) {
+                $orderModel->updateOrderStatus($orderId, 6);
+                $_SESSION['activityAdmin'] = "Hủy đơn hàng thành công";
+                $orderController = new OrderController();
+                $orderController->getOrder();
+            } elseif ($userRole == 1) {
+                if ($orderModel->isOrderCreatedWithinTwoHours($orderName)) {
+                    $orderModel->updateOrderStatus($orderId, 6);
+                    $_SESSION['cancelResult'] = "Hủy đặt hàng thành công";
+                } else {
+                    $_SESSION['cancelResult'] = "Đơn đặt hàng của bạn đã được tạo hơn 2 tiếng nên không thể hủy!!!";
+                }
+
+                $orderController = new OrderController();
+                $orderController->historyOrder();
+            }
+        } else {
+            if ($orderModel->isOrderCreatedWithinTwoHours($orderName)) {
+                $_SESSION['cancelResult'] = "Hủy đặt hàng thành công";
+                $orderModel->updateOrderStatus($orderId, 6);
+            } else {
+                $_SESSION['cancelResult'] = "Đơn đặt hàng của bạn đã được tạo cách đây hơn 2 tiếng nên không thể hủy!!!";
+            }
+
+            $orderController = new OrderController();
+            $orderController->getOrderHistory();
+        }
     }
+
+
+
 
     public function viewDetailOrder()
     {

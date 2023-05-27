@@ -117,7 +117,7 @@ class OrderModel
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
             // Lấy tất cả các order từ kết quả truy vấn
-            $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $orders = $stmt->fetch(PDO::FETCH_ASSOC);
             return $orders;
         } catch (PDOException $e) {
             // Xử lý ngoại lệ nếu có lỗi xảy ra
@@ -195,5 +195,32 @@ class OrderModel
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $result;
+    }
+
+    public function isOrderCreatedWithinTwoHours($orderName)
+    {
+        // Lấy thông tin đơn hàng từ tên đơn hàng
+        $order = $this->getOrdersByOrderName($orderName);
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+        if ($order) {
+            // Lấy thời gian tạo đơn hàng
+            $createdTime = new DateTime($order['Date_created']);
+
+            // Lấy thời gian hiện tại
+            $currentTime = new DateTime();
+
+            // Tính thời gian chênh lệch giữa thời gian hiện tại và thời gian tạo đơn hàng (tính bằng giây)
+            $timeDiff = $currentTime->getTimestamp() - $createdTime->getTimestamp();
+
+            // Kiểm tra xem thời gian chênh lệch có nhỏ hơn 2 giờ (2 * 60 * 60 giây) hay không
+            if ($timeDiff < (2 * 60 * 60)) {
+                // Đơn hàng được tạo trong vòng 2 tiếng
+                return true;
+            }
+        }
+
+        // Đơn hàng không được tạo trong vòng 2 tiếng
+        return false;
     }
 }
