@@ -184,7 +184,7 @@ class OrderController
 
             $orderModel->updateOrder($orderId, $name, $phone, $email, $customerName, $deliveryAddress, $dateCreated, $totalPrice, $isPayOnline, $status);
 
-
+            $_SESSION['activityAdmin'] = "Edit order thành công";
             $orderController = new OrderController();
             $orderController->getOrder();
         }

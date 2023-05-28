@@ -72,7 +72,9 @@ unset($_SESSION['onl']);
 setcookie('order_name', $orderName, time() + 600, '/'); // 600 giây = 10 phút
 
 
-
+$new_orders_count = $order_model->getNewOrdersCount();
+// Lưu số lượng đơn hàng mới vào session
+$_SESSION['new_orders_count'] = $new_orders_count;
 header('Location: http://localhost/shop/views/payment/success.php');
 
 /**

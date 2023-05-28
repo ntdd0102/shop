@@ -97,8 +97,11 @@ class ProductController
         // Gọi phương thức để lấy tất cả sản phẩm
         $products = $productModel->getAllProducts();
 
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getAll();
         // Lưu dữ liệu vào session
         $_SESSION['products'] = $products;
+        $_SESSION['categories'] = $categories;
 
         // Chuyển hướng đến trang productAdmin.php
         header('Location: http://localhost/shop/views/admin/productAdmin.php');
@@ -161,6 +164,7 @@ class ProductController
             // Thêm thành công
             // Redirect hoặc thông báo thành công cho người dùng
             //var_dump($productId);
+            $_SESSION['activityAdmin'] = "Thêm sản phẩm thành công";
             $productController = new ProductController();
             $productController->getProduct();
         } else {
@@ -243,6 +247,7 @@ class ProductController
             // Cập nhật thành công
             // Redirect hoặc thông báo thành công cho người dùng
             //var_dump($productData);
+            $_SESSION['activityAdmin'] = "Cập nhật sản phẩm thành công";
             $productController = new ProductController();
             $productController->getProduct();
         } else {
@@ -299,6 +304,7 @@ class ProductController
 
         // Gọi hàm deleteProduct trong ProductModel để chuyển thuộc tính is_visible thành 0
         $productModel->deleteProduct($product_id);
+        $_SESSION['activityAdmin'] = "Xóa sản phẩm thành công";
         $productController = new ProductController();
         $productController->getProduct();
     }

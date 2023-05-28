@@ -2,7 +2,7 @@
 <?php
 // Kiểm tra nếu có tham số 'error' trong URL và có giá trị là 1
 if (isset($_GET['error']) && $_GET['error'] == 1) {
-    $message = "Đăng ký thất bại";
+    $message = "Cập nhật thất bại";
 } else {
     $message = ""; // Đặt giá trị mặc định là rỗng nếu không có lỗi
 }
@@ -12,6 +12,7 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
 
 <head>
     <title>Cập nhật tài khoản</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <style>
         .navbar {
             font-family: Arial, sans-serif;

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../models/UserModel.php';
+require_once "../models/OrderModel.php";
 
 if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'login') {
     $userController = new UserController();
@@ -45,6 +46,10 @@ class UserController
                 header('Location: /shop/index.php');
                 exit();
             } else if ($user['Role'] == 2) {
+                $order_model = new OrderModel();
+                $new_orders_count = $order_model->getNewOrdersCount();
+                // Lưu số lượng đơn hàng mới vào session
+                $_SESSION['new_orders_count'] = $new_orders_count;
                 header('Location: /shop/views/admin/hello.php');
                 exit();
             }

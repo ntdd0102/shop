@@ -117,7 +117,7 @@ class OrderModel
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
             // Lấy tất cả các order từ kết quả truy vấn
-            $orders = $stmt->fetch(PDO::FETCH_ASSOC);
+            $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $orders;
         } catch (PDOException $e) {
             // Xử lý ngoại lệ nếu có lỗi xảy ra
@@ -205,7 +205,7 @@ class OrderModel
 
         if ($order) {
             // Lấy thời gian tạo đơn hàng
-            $createdTime = new DateTime($order['Date_created']);
+            $createdTime = new DateTime($order[0]['Date_created']);
 
             // Lấy thời gian hiện tại
             $currentTime = new DateTime();
@@ -222,5 +222,14 @@ class OrderModel
 
         // Đơn hàng không được tạo trong vòng 2 tiếng
         return false;
+    }
+
+    public function getNewOrdersCount()
+    {
+        $sql = "SELECT COUNT(*) AS newOrdersCount FROM orders WHERE Status = 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['newOrdersCount'];
     }
 }

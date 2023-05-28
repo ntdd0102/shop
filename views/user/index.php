@@ -113,7 +113,9 @@
 
      <div class="container mt-4">
          <?php foreach ($productsByCategory as $categoryId => $products) : ?>
-             <h1 class="my-4"><?php echo $categoryModel->getCategoryNameById($categoryId); ?></h1>
+             <h4 class="my-4 display-4 font-weight-bold text-dark">
+                 <?php echo $categoryModel->getCategoryNameById($categoryId); ?></h4>
+
              <div class="row">
                  <?php $count = 0; ?>
                  <?php foreach ($products as $product) : ?>
@@ -154,5 +156,27 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
  </body>
+ <footer class="bg-dark text-light py-4">
+     <div class="container">
+         <div class="row">
+             <div class="col-md-4">
+                 <h5>Thông tin liên hệ</h5>
+                 <p>Số điện thoại: 0338470964</p>
+                 <p>Email: ntdd0102@gmail.com</p>
+                 <p>Địa chỉ: 736/48 Lê Đức Thọ P.15 Q.Gò Vấp</p>
+             </div>
+
+             <div class="col-md-4">
+                 <h5>Kết nối với chúng tôi</h5>
+                 <ul class="list-unstyled">
+                     <li><a href="#" target="_blank">Facebook</a></li>
+                     <li><a href="#" target="_blank">Twitter</a></li>
+                     <li><a href="#" target="_blank">Instagram</a></li>
+                     <li><a href="#" target="_blank">LinkedIn</a></li>
+                 </ul>
+             </div>
+         </div>
+     </div>
+ </footer>
 
  </html>

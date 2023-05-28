@@ -82,7 +82,7 @@ $orders = unserialize(urldecode($_GET['orders']));
     <script>
     setTimeout(function() {
         document.getElementById("resultMessage").style.display = "none";
-    }, 10000);
+    }, 5000);
     </script>
     <?php unset($_SESSION['cancelResult']); ?>
     <?php endif; ?>
@@ -103,6 +103,7 @@ $orders = unserialize(urldecode($_GET['orders']));
                 <p class="card-text">Tên khách hàng: <?php echo $order['Customer_name']; ?></p>
                 <p class="card-text">Số điện thoại: <?php echo $order['Phone']; ?></p>
                 <p class="card-text">Tổng tiền: <?php echo $order['Total_price']; ?></p>
+                <p class="card-text">Ngày đặt: <?php echo date('d/m/Y H:i:s', strtotime($order['Date_created'])); ?></p>
                 <p class="card-text">Trạng thái:
                     <?php
                             $status = $order['Status'];
