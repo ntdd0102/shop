@@ -1,3 +1,11 @@
+<?php
+
+if (!isset($_SESSION['user']) || $_SESSION['user']['Role'] != 2) {
+    header('Location: http://localhost/shop/index.php');
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,8 +22,7 @@
     <div class="container">
         <h2>Add Product</h2>
 
-        <form action="/shop/controllers/ProductController.php?action=saveAddProduct" method="POST"
-            enctype="multipart/form-data">
+        <form action="/shop/controllers/ProductController.php?action=saveAddProduct" method="POST" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -37,7 +44,7 @@
                 <label for="category">Category:</label>
                 <select class="form-control" id="category" name="category">
                     <?php foreach ($categories as $category) : ?>
-                    <option value="<?php echo $category['Id']; ?>"><?php echo $category['Name']; ?></option>
+                        <option value="<?php echo $category['Id']; ?>"><?php echo $category['Name']; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -46,7 +53,7 @@
                 <label for="supplier">Supplier:</label>
                 <select class="form-control" id="supplier" name="supplier">
                     <?php foreach ($suppliers as $supplier) : ?>
-                    <option value="<?php echo $supplier['Id']; ?>"><?php echo $supplier['Name']; ?></option>
+                        <option value="<?php echo $supplier['Id']; ?>"><?php echo $supplier['Name']; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

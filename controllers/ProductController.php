@@ -243,13 +243,20 @@ class ProductController
         $rowCount = $productModel->updateProduct($productId, $productData);
 
         // Kiểm tra kết quả cập nhật
-        if ($rowCount > 0) {
-            // Cập nhật thành công
-            // Redirect hoặc thông báo thành công cho người dùng
-            //var_dump($productData);
-            $_SESSION['activityAdmin'] = "Cập nhật sản phẩm thành công";
-            $productController = new ProductController();
-            $productController->getProduct();
+        if ($rowCount >= 0) {
+            if ($rowCount > 0) {
+                // Cập nhật thành công
+                // Redirect hoặc thông báo thành công cho người dùng
+                $_SESSION['activityAdmin'] = "Cập nhật sản phẩm thành công";
+                $productController = new ProductController();
+                $productController->getProduct();
+            } else {
+                // Không có sự thay đổi dữ liệu
+                // Xử lý thông báo hoặc redirect người dùng
+                $_SESSION['activityAdmin'] = "Cập nhật sản phẩm thành công";
+                $productController = new ProductController();
+                $productController->getProduct();
+            }
         } else {
             // Cập nhật thất bại
             // Xử lý lỗi, redirect hoặc thông báo cho người dùng

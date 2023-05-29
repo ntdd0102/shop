@@ -2,7 +2,9 @@
 session_start();
 require_once "../../models/ProductModel.php";
 require_once "../../models/OrderModel.php";
-
+if (!isset($_SESSION['user']) || $_SESSION['user']['Role'] != 2) {
+    header('Location: http://localhost/shop/index.php');
+}
 $productModel = new ProductModel();
 $orderModel = new OrderModel();
 
@@ -23,37 +25,37 @@ $orderModel = new OrderModel();
         <h2>Order Detail</h2>
 
         <?php if (!empty($_SESSION['orderDetail'])) : ?>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Order Name</th>
-                    <th>Product Name</th>
-                    <th>Image</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($_SESSION['orderDetail'] as $orderDetail) : ?>
-                <?php
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order Name</th>
+                        <th>Product Name</th>
+                        <th>Image</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($_SESSION['orderDetail'] as $orderDetail) : ?>
+                        <?php
                         $product = $productModel->getProductById($orderDetail['Product_id']);
                         $order = $orderModel->getOrderById($orderDetail['Order_id']);
                         ?>
-                <tr>
-                    <td><?php echo $order['Name']; ?></td>
-                    <td><?php echo $product['Name']; ?></td>
-                    <td>
-                        <img src="<?php echo $product['Image']; ?>" alt="<?php echo $product['Name']; ?>"
-                            class="img-thumbnail" style="max-height: 100px;">
-                    </td>
-                    <td><?php echo $orderDetail['Quantity']; ?></td>
-                    <td><?php echo $orderDetail['Price_product']; ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                        <tr>
+                            <td><?php echo $order['Name']; ?></td>
+                            <td><?php echo $product['Name']; ?></td>
+                            <td>
+                                <img src="<?php echo $product['Image']; ?>" alt="<?php echo $product['Name']; ?>" class="img-thumbnail" style="max-height: 100px;">
+                            </td>
+                            <td><?php echo $orderDetail['Quantity']; ?></td>
+                            <td><?php echo number_format($orderDetail['Price_product'], 0, ',', '.'); ?></td>
+
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         <?php else : ?>
-        <p>No order details found.</p>
+            <p>No order details found.</p>
         <?php endif; ?>
 
         <a href="/shop/controllers/OrderController.php?action=adminGetOrder" class="btn btn-primary">Quay lại</a>

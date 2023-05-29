@@ -102,7 +102,7 @@ $orders = unserialize(urldecode($_GET['orders']));
                 <h5 class="card-title">Mã đơn hàng: <?php echo $order['Name']; ?></h5>
                 <p class="card-text">Tên khách hàng: <?php echo $order['Customer_name']; ?></p>
                 <p class="card-text">Số điện thoại: <?php echo $order['Phone']; ?></p>
-                <p class="card-text">Tổng tiền: <?php echo $order['Total_price']; ?></p>
+                <p class="card-text">Tổng tiền: <?php echo number_format($order['Total_price'], 0, ',', '.'); ?></p>
                 <p class="card-text">Ngày đặt: <?php echo date('d/m/Y H:i:s', strtotime($order['Date_created'])); ?></p>
                 <p class="card-text">Trạng thái:
                     <?php
@@ -157,7 +157,7 @@ $orders = unserialize(urldecode($_GET['orders']));
                             <tr>
                                 <td><?php echo $orderDetail['Product_id']; ?></td>
                                 <td><?php echo $orderDetail['Quantity']; ?></td>
-                                <td><?php echo $orderDetail['Price_product']; ?></td>
+                                <td><?php echo number_format($orderDetail['Price_product'], 0, ',', '.'); ?></td>
                                 <?php
                                                 // Lấy thông tin sản phẩm từ ID sản phẩm (ProductID)
                                                 require_once "../../models/ProductModel.php";

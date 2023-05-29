@@ -151,29 +151,29 @@ if (isset($_GET['error']) && $_GET['error'] == 1) {
         </div>
         <div class="row mt-3">
             <div class="col-md-6">
-                <h4>Select payment method:</h4>
+                <h4>Chọn phương thức thanh toán:</h4>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="paymentMethod" id="cashPayment" value="cash"
                         <?php echo $paymentMethod === 'cash' ? 'checked' : ''; ?>>
                     <label class="form-check-label" for="cashPayment">
-                        Cash payment
+                        Thanh toán khi nhận hàng
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="paymentMethod" id="onlinePayment" value="online"
                         <?php echo $paymentMethod === 'online' ? 'checked' : ''; ?>>
                     <label class="form-check-label" for="onlinePayment">
-                        Online payment
+                        Thanh toán qua paypal
                     </label>
                 </div>
             </div>
             <div class="col-md-6 text-end">
                 <?php if ($paymentMethod === 'cash') { ?>
                 <a href="/shop/controllers/PaymentController.php?action=getInforOrder&order=cash"
-                    class="btn btn-primary">Payment</a>
+                    class="btn btn-primary">Thanh toán</a>
                 <?php } elseif ($paymentMethod === 'online') { ?>
                 <a href="/shop/controllers/PaymentController.php?action=getInforOrder&order=onl"
-                    class="btn btn-primary">Payment</a>
+                    class="btn btn-primary">Thanh toán</a>
                 <?php } ?>
             </div>
         </div>

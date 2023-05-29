@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user']['Role'] != 2) {
+    header('Location: http://localhost/shop/index.php');
+}
 if (isset($_SESSION['supplier'])) {
     $suppliers = $_SESSION['supplier'];
 }

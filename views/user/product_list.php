@@ -2,6 +2,7 @@
 require_once "../../models/connection.php";
 require_once "../../models/CategoryModel.php";
 require_once "../../models/ProductModel.php";
+require_once "../../models/SupplierModel.php";
 
 // Get category ID from query string
 $category_id = isset($_GET['category_id']) ? $_GET['category_id'] : null;
@@ -21,6 +22,9 @@ if ($sort === 'asc') {
         return $b['Price'] <=> $a['Price']; // Sắp xếp giá giảm dần
     });
 }
+
+$supplierModel = new SupplierModel();
+$suppliers = $supplierModel->getAll();
 
 // Pagination
 $items_per_page = 4; // Số lượng sản phẩm hiển thị trên mỗi trang
@@ -136,13 +140,26 @@ $category_name = $categoryModel->getCategoryNameById($category_id);
         </div>
     </nav>
     <div class="container">
-        <h1 class="my-4">All Products by Category: <?php echo $category_name; ?></h1>
+        <h1 class="my-4"><?php echo $category_name; ?></h1>
         <div class="sort-section text-center">
-            <p>Sort by:</p>
+            <p>Sắp xếp theo:</p>
             <a href="?category_id=<?php echo $category_id; ?>&sort=asc" class="btn btn-primary">Price (Cao đến thấp)</a>
             <a href="?category_id=<?php echo $category_id; ?>&sort=desc" class="btn btn-primary">Price (Thấp đến
                 cao)</a>
         </div>
+        <div class="filter-section">
+            <label for="supplier">Lọc theo nhà sản xuất:</label>
+            <select id="supplier" name="supplier">
+                <option value="">Tất cả</option>
+                <?php foreach ($suppliers as $supplier) : ?>
+                    <option value="<?php echo $supplier['Id']; ?>">
+                        <?php echo $supplier['Name']; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <button type="submit">Lọc</button>
+        </div>
+
 
         <div class="row">
             <?php foreach ($paginated_products as $product) : ?>
