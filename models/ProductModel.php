@@ -151,6 +151,26 @@ class ProductModel
 
         return false; // Tên sản phẩm không tồn tại
     }
+
+    public function getProductByCategoryIdAndSupplier($category_id, $supplier_id)
+    {
+        $sql = "SELECT * FROM products WHERE Category_id = :category_id";
+
+        if (!empty($supplier_id)) {
+            $sql .= " AND Supplier_id = :supplier_id";
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':category_id', $category_id, PDO::PARAM_INT);
+
+        if (!empty($supplier_id)) {
+            $stmt->bindParam(':supplier_id', $supplier_id, PDO::PARAM_INT);
+        }
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 

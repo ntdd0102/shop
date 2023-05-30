@@ -7,9 +7,12 @@ require_once "../../models/SupplierModel.php";
 // Get category ID from query string
 $category_id = isset($_GET['category_id']) ? $_GET['category_id'] : null;
 
+$selected_supplier = isset($_GET['supplier']) ? $_GET['supplier'] : '';
+
+
 // Load products by category ID
 $productModel = new ProductModel();
-$products = $productModel->getProductByCategoryId($category_id);
+$products = $productModel->getProductByCategoryIdAndSupplier($category_id, $selected_supplier);
 
 // Sort products
 $sort = isset($_GET['sort']) ? $_GET['sort'] : ''; // Lấy giá trị "sort" từ URL
@@ -141,26 +144,33 @@ $category_name = $categoryModel->getCategoryNameById($category_id);
     </nav>
     <div class="container">
         <h1 class="my-4"><?php echo $category_name; ?></h1>
-        <div class="sort-section text-center">
-            <p>Sắp xếp theo:</p>
-            <a href="?category_id=<?php echo $category_id; ?>&sort=asc" class="btn btn-primary">Price (Cao đến thấp)</a>
-            <a href="?category_id=<?php echo $category_id; ?>&sort=desc" class="btn btn-primary">Price (Thấp đến
-                cao)</a>
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="sort-section">
+                    <p>Sắp xếp theo:</p>
+                    <a href="?category_id=<?php echo $category_id; ?>&sort=asc" class="btn btn-primary">Giá (Cao đến
+                        thấp)</a>
+                    <a href="?category_id=<?php echo $category_id; ?>&sort=desc" class="btn btn-primary">Giá (Thấp đến
+                        cao)</a>
+                </div>
+            </div>
         </div>
-        <div class="filter-section">
-            <label for="supplier">Lọc theo nhà sản xuất:</label>
-            <select id="supplier" name="supplier">
-                <option value="">Tất cả</option>
-                <?php foreach ($suppliers as $supplier) : ?>
-                    <option value="<?php echo $supplier['Id']; ?>">
-                        <?php echo $supplier['Name']; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <button type="submit">Lọc</button>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="filter-section">
+                    <label for="supplier">Lọc theo nhà sản xuất:</label>
+                    <select id="supplier" name="supplier" class="form-select">
+                        <option value="">Tất cả</option>
+                        <?php foreach ($suppliers as $supplier) : ?>
+                            <option value="<?php echo $supplier['Id']; ?>">
+                                <?php echo $supplier['Name']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button id="filter-btn" type="button" class="btn btn-primary">Lọc</button>
+                </div>
+            </div>
         </div>
-
-
         <div class="row">
             <?php foreach ($paginated_products as $product) : ?>
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
@@ -180,31 +190,52 @@ $category_name = $categoryModel->getCategoryNameById($category_id);
                 </div>
             <?php endforeach; ?>
         </div>
-
-        <div class="text-center">
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <?php if ($total_pages > 1) : ?>
-                        <?php if ($current_page > 1) : ?>
-                            <li class="page-item">
-                                <a class="page-link" href="?category_id=<?php echo $category_id; ?>&sort=<?php echo $sort; ?>&page=<?php echo ($current_page - 1); ?>">Previous</a>
-                            </li>
-                        <?php endif; ?>
-                        <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
-                            <li class="page-item <?php echo ($i == $current_page) ? 'active' : ''; ?>">
-                                <a class="page-link" href="?category_id=<?php echo $category_id; ?>&sort=<?php echo $sort; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                            </li>
-                        <?php endfor; ?>
-                        <?php if ($current_page < $total_pages) : ?>
-                            <li class="page-item">
-                                <a class="page-link" href="?category_id=<?php echo $category_id; ?>&sort=<?php echo $sort; ?>&page=<?php echo ($current_page + 1); ?>">Next</a>
-                            </li>
-                        <?php endif; ?>
-                    <?php endif; ?>
-                </ul>
-            </nav>
-        </div>
     </div>
+    <div class="text-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <?php if ($total_pages > 1) : ?>
+                    <?php if ($current_page > 1) : ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?category_id=<?php echo $category_id; ?>&sort=<?php echo $sort; ?>&page=<?php echo ($current_page - 1); ?>">Previous</a>
+                        </li>
+                    <?php endif; ?>
+                    <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                        <li class="page-item <?php echo ($i == $current_page) ? 'active' : ''; ?>">
+                            <a class="page-link" href="?category_id=<?php echo $category_id; ?>&sort=<?php echo $sort; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    <?php if ($current_page < $total_pages) : ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?category_id=<?php echo $category_id; ?>&sort=<?php echo $sort; ?>&page=<?php echo ($current_page + 1); ?>">Next</a>
+                        </li>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </ul>
+        </nav>
+    </div>
+    </div>
+    <script>
+        // Lắng nghe sự kiện khi nhấn nút lọc
+        document.getElementById('filter-btn').addEventListener('click', function() {
+            var selectedSupplier = document.getElementById('supplier').value; // Lấy giá trị nhà sản xuất được chọn
+            var currentUrl = window.location.href; // Lấy URL hiện tại
+            var newUrl = updateQueryStringParameter(currentUrl, 'supplier',
+                selectedSupplier); // Cập nhật giá trị nhà sản xuất vào URL
+            window.location.href = newUrl; // Chuyển hướng đến URL mới với giá trị nhà sản xuất đã lọc
+        });
+
+        // Hàm cập nhật giá trị tham số trong URL
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            } else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+    </script>
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
